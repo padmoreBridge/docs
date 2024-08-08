@@ -1,0 +1,271 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "TheBridge Developer API",
+      "description": "TheBridge Developer API allows clients to integrate with the fintech application to perform various financial transactions. This API supports making bank and mobile money transactions, checking account balances, and simulating transaction callbacks. The API provides a secure and reliable way to manage financial operations programmatically.",
+      "version": "1.0.0"
+    },
+    "servers": [
+      {
+        "url": "https://{api_host}",
+        "variables": {
+          "api_host": {
+            "default": "test-api.thebridgesolutions.com"
+          }
+        }
+      }
+    ],
+    "paths": {
+      "/make_payment": {
+        "post": {
+          "summary": "Make Payment",
+          "description": "Initiates a payment transaction. Clients can use this endpoint to make payments via bank or mobile money. The request includes details such as the service ID, customer number, transaction type, amount, and callback URL to receive transaction status updates.",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "service_id": {
+                      "type": "integer",
+                      "description": "Unique identifier for the service."
+                    },
+                    "customer_number": {
+                      "type": "string",
+                      "description": "Customer's phone number."
+                    },
+                    "reference": {
+                      "type": "string",
+                      "description": "Reference for the payment."
+                    },
+                    "transaction_id": {
+                      "type": "string",
+                      "description": "Unique identifier for the transaction."
+                    },
+                    "trans_type": {
+                      "type": "string",
+                      "description": "Type of transaction (e.g., CTM for customer-to-merchant)."
+                    },
+                    "amount": {
+                      "type": "number",
+                      "description": "Amount to be transacted."
+                    },
+                    "nw": {
+                      "type": "string",
+                      "description": "Network provider (e.g., MTN)."
+                    },
+                    "nickname": {
+                      "type": "string",
+                      "description": "Nickname for the transaction."
+                    },
+                    "payment_option": {
+                      "type": "string",
+                      "description": "Payment option (e.g., MOM for mobile money)."
+                    },
+                    "currency_code": {
+                      "type": "string",
+                      "description": "Currency code (e.g., GHS for Ghanaian Cedi)."
+                    },
+                    "currency_val": {
+                      "type": "string",
+                      "description": "Currency value."
+                    },
+                    "callback_url": {
+                      "type": "string",
+                      "description": "URL to receive transaction status updates."
+                    },
+                    "request_time": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Timestamp of the request."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Payment made successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "response_message": {
+                        "type": "string"
+                      },
+                      "response_code": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/get_account_balance": {
+        "post": {
+          "summary": "Get Account Balance - Client",
+          "description": "Retrieves the account balance for a specified service. Clients can use this endpoint to check the balance of their account associated with a service ID.",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "service_id": {
+                      "type": "integer",
+                      "description": "Unique identifier for the service."
+                    },
+                    "request_time": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Timestamp of the request."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Account balance retrieved successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "response_message": {
+                        "type": "string"
+                      },
+                      "response_code": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/get_transaction_status": {
+        "post": {
+          "summary": "Get Transaction Status",
+          "description": "Retrieves the status of a specific transaction. Clients can use this endpoint to check the current status of a transaction using the transaction ID.",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "service_id": {
+                      "type": "integer",
+                      "description": "Unique identifier for the service."
+                    },
+                    "transaction_id": {
+                      "type": "string",
+                      "description": "Unique identifier for the transaction."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Transaction status retrieved successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "response_message": {
+                        "type": "string"
+                      },
+                      "response_code": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/payment_callback_orchard": {
+        "post": {
+          "summary": "Simulate Orchard Callback",
+          "description": "Simulates a callback from the Orchard payment system. This endpoint is used for testing purposes to simulate successful or failed transaction callbacks.",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Message indicating the status of the transaction."
+                    },
+                    "trans_id": {
+                      "type": "string",
+                      "description": "Transaction ID from Orchard."
+                    },
+                    "trans_ref": {
+                      "type": "string",
+                      "description": "Reference ID for the transaction."
+                    },
+                    "trans_status": {
+                      "type": "string",
+                      "description": "Status code for the transaction."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Callback simulated successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "response_message": {
+                        "type": "string"
+                      },
+                      "response_code": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "securitySchemes": {
+        "basicAuth": {
+          "type": "http",
+          "scheme": "basic"
+        }
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
