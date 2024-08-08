@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Starter Kit",
+  "name": "TheBridge",
   "logo": {
     "dark": "/logo/dark.svg",
     "light": "/logo/light.svg"
@@ -18,7 +18,7 @@
   "topbarLinks": [
     {
       "name": "Support",
-      "url": "mailto:hi@mintlify.com"
+      "url": "mailto:support@thebridgesolutions.com"
     }
   ],
   "topbarCtaButton": {
@@ -75,11 +75,12 @@
       ]
     },
     {
-      "group": "Endpoint Examples",
+      "group": "API Reference",
       "pages": [
-        "api-reference/endpoint/get",
-        "api-reference/endpoint/create",
-        "api-reference/endpoint/delete"
+        "api-reference/endpoint/make-payment",
+        "api-reference/endpoint/get-account-balance--client",
+        "api-reference/endpoint/get-transaction-status",
+        "api-reference/endpoint/simulate-orchard-callback"
       ]
     }
   ],
